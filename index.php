@@ -4,6 +4,21 @@ declare(strict_types=1);
 
 class Player {
     public int $level;
+
+    public function __construct(int $level)
+    {
+        $this->level = $level;
+    }
+
+    public function getLevel(): int
+    {
+        return $this->level;
+    }
+
+    public function setLevel(int $level): void
+    {
+        $this->level = $level;
+    }
 }
 
 class Encounter {
@@ -35,19 +50,24 @@ class Encounter {
     }
 }
 
+$greg = new  Player(400);
+$jade = new Player(800);
+
+$encounter = new Encounter;
+
 echo sprintf(
     'Greg à %.2f%% chance de gagner face a Jade',
-    probabilityAgainst($greg, $jade)*100
+    $encounter->probabilityAgainst($greg->getLevel(), $jade->getLevel())*100
 ).PHP_EOL;
 
 // Imaginons que greg l'emporte tout de même.
-setNewLevel($greg, $jade, RESULT_WINNER);
-setNewLevel($jade, $greg, RESULT_LOSER);
+$encounter->setNewLevel($greg->level, $jade->level, $encounter->getResultWinner());
+$encounter->setNewLevel($jade->level, $greg->level, $encounter->getResultLoser());
 
 echo sprintf(
     'les niveaux des joueurs ont évolués vers %s pour Greg et %s pour Jade',
-    $greg,
-    $jade
+    $greg->getLevel(),
+    $jade->getLevel()
 );
 
 exit(0);
