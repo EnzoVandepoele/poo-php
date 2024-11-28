@@ -56,10 +56,7 @@ abstract class Player
         return 1 / (1 + (10 ** (($player->getRatio() - $this->getRatio()) / 400)));
     }
 
-    private function updateRatioAgainst(self $player, int $result): void
-    {
-        $this->ratio += 32 * ($result - $this->probabilityAgainst($player));
-    }
+    abstract public function updateRatioAgainst(self $player, int $result): void;
 
     public function getRatio(): float
     {
@@ -79,6 +76,31 @@ final class QueuingPlayer extends Player {
     public function getRange(): int
     {
         return $this->range;
+    }
+
+    public function updateRatioAgainst(Player $player, int $result): void
+    {
+        $this->ratio += 32 * ($result - $this->probabilityAgainst($player));
+    }
+}
+
+final class BlitzPlayer extends Player {
+    private int $range;
+
+    public function __construct(string $name, float $ratio = 1200.0, int $range = 0)
+    {
+        parent::__construct($name, $ratio);
+        $this->range = $range;
+    }
+
+    public function getRange(): int
+    {
+        return $this->range;
+    }
+
+    public function updateRatioAgainst(Player $player, int $result): void
+    {
+        $this->ratio += 4 * 32 * ($result - $this->probabilityAgainst($player));
     }
 }
 
