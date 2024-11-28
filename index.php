@@ -27,7 +27,7 @@ class Lobby {
         });
     }
 
-    public function addPlayer(QueuingPlayer $player): void
+    private function addPlayer(QueuingPlayer $player): void
     {
         $this->queuingPlayers[] = $player;
     }
@@ -40,13 +40,13 @@ class Lobby {
     }
 }
 
-class Player
+abstract class Player
 {
     public function __construct(protected string $name, protected float $ratio = 400.0)
     {
     }
 
-    public function getName(): string
+    private function getName(): string
     {
         return $this->name;
     }
@@ -56,7 +56,7 @@ class Player
         return 1 / (1 + (10 ** (($player->getRatio() - $this->getRatio()) / 400)));
     }
 
-    public function updateRatioAgainst(self $player, int $result): void
+    private function updateRatioAgainst(self $player, int $result): void
     {
         $this->ratio += 32 * ($result - $this->probabilityAgainst($player));
     }
@@ -67,8 +67,8 @@ class Player
     }
 }
 
-class QueuingPlayer extends Player {
-    public int $range;
+final class QueuingPlayer extends Player {
+    private int $range;
 
     public function __construct(string $name, float $ratio = 400.0, int $range = 0)
     {
