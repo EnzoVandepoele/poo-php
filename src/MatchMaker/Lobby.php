@@ -11,10 +11,10 @@
 
 declare(strict_types=1);
 
-namespace App\MatchMaker;
+namespace App\Domain\MatchMaker;
 
-use App\MatchMaker\Player\Player;
-use App\MatchMaker\Player\QueuingPlayer;
+use App\Domain\MatchMaker\Player\Player;
+use App\Domain\MatchMaker\Player\QueuingPlayer;
 
 class Lobby
 {
