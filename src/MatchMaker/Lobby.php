@@ -13,10 +13,11 @@ declare(strict_types=1);
 
 namespace App\Domain\MatchMaker;
 
+use App\Domain\MatchMaker\Player\PlayerInterface;
 use App\Domain\MatchMaker\Player\Player;
 use App\Domain\MatchMaker\Player\QueuingPlayer;
 
-class Lobby
+class Lobby implements LobbyInterface
 {
     /** @var array<QueuingPlayer> */
     public array $queuingPlayers = [];
@@ -33,12 +34,12 @@ class Lobby
         });
     }
 
-    public function addPlayer(Player $player): void
+    public function addPlayer(PlayerInterface $player): void
     {
         $this->queuingPlayers[] = new QueuingPlayer($player);
     }
 
-    public function addPlayers(Player ...$players): void
+    public function addPlayers(PlayerInterface ...$players): void
     {
         foreach ($players as $player) {
             $this->addPlayer($player);
